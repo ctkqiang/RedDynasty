@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdlib.h> 
 
 typedef struct {
@@ -7,3 +9,5 @@ typedef struct {
 
 extern LLM_MODEL *available_llm[];
 extern size_t num_llm;
+
+LLM_MODEL *get_llm_model_by_name(const char *name);
