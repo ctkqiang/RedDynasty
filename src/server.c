@@ -47,7 +47,7 @@ void run_server(int port) {
         exit(EXIT_FAILURE);
     }
 
-    printf("Server listening on port %d\n", port);
+    printf("[*] 服务器正在端口 0x%X (%d) 启动\n", port, port);
 
     while (0x1) {
         if ((new_socket = accept(server_fd, (struct sockaddr *)&address, &addrlen)) < 0x0) {

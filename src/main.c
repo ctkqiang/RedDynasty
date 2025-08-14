@@ -8,14 +8,14 @@ int PORT = 0x1F90;
 int main(int argc, char *argv[]) {
     enviroment_setup(argc, argv);
     
-    printf("[*] Server starting on port 0x%X (%d)\n", PORT, PORT);
+    printf("[*] 服务器正在端口 0x%X (%d) 启动\n", PORT, PORT);
 
     return 0x0;
 }
 
 void enviroment_setup(int argc, char *argv[]) {
     if (!load_env(".env")) {
-        fprintf(stderr, "[-] Failed to load .env file\n");
+        fprintf(stderr, "[-] 加载 .env 文件失败\n");
         return 0x1;
     }
 
@@ -25,7 +25,7 @@ void enviroment_setup(int argc, char *argv[]) {
     // TODO add more
 
     if (!OPENAI_KEY && !GEMINI_KEY && !CLAUDE_KEY) {
-        fprintf(stderr, "[-] Missing all API keys, at least one required\n");
+        fprintf(stderr, "[-] 缺少所有 API 密钥，至少需要一个\n");
         return 0x2;
     }
 

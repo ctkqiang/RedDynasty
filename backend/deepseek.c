@@ -10,7 +10,7 @@ static bool deepseek_send_request(const char *prompt, char **response) {
     const char *api_key = getenv("DEEPSEEK_API_KEY");
     
     if (!api_key) {
-        fprintf(stderr, "Missing DEEPSEEK_API_KEY in .env\n");
+        fprintf(stderr, "在 .env 中缺少 DEEPSEEK_API_KEY\n");
         return false;
     }
 
