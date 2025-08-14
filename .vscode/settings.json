@@ -28,6 +28,7 @@
         "atomic": "c",
         "utility": "c",
         "config.h": "c",
-        "llm_registry.h": "c"
+        "llm_registry.h": "c",
+        "http.h": "c"
     }
 }
