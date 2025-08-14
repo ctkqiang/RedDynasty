@@ -1,3 +1,5 @@
+#pragma once
+
 typedef struct {
     int port;
     int maximum_connections;
@@ -6,3 +8,5 @@ typedef struct {
     char *key_path;
     bool use_ssl; 
 } ServerConfig;
+
+void load_env(const char *filename);

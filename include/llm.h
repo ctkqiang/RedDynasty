@@ -6,6 +6,7 @@
 typedef struct {
     const char *name;
     bool (*send_request)(const char *prompt, char **response);  
+    void (*cleanup) (void);
 } LLM_MODEL;
 
 extern LLM_MODEL *available_llm[];

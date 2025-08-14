@@ -1,6 +1,33 @@
 {
     "files.associations": {
         "*.embeddedhtml": "html",
-        "__config": "c"
+        "__config": "c",
+        "cwchar": "cpp",
+        "deque": "cpp",
+        "ios": "cpp",
+        "istream": "cpp",
+        "iterator": "cpp",
+        "locale": "cpp",
+        "memory": "cpp",
+        "ostream": "cpp",
+        "queue": "cpp",
+        "sstream": "cpp",
+        "stack": "cpp",
+        "streambuf": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "tuple": "cpp",
+        "unordered_map": "cpp",
+        "variant": "cpp",
+        "vector": "cpp",
+        "llm.h": "c",
+        "string.h": "c",
+        "bitset": "c",
+        "algorithm": "c",
+        "__hash_table": "c",
+        "atomic": "c",
+        "utility": "c",
+        "config.h": "c",
+        "llm_registry.h": "c"
     }
 }
