@@ -33,6 +33,10 @@
         "__split_buffer": "c",
         "complex": "c",
         "stdarg.h": "c",
-        "__locale": "c"
+        "__locale": "c",
+        "cctype": "c",
+        "cstdio": "c",
+        "cstring": "c",
+        "cmath": "c"
     }
 }
