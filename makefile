@@ -1,22 +1,27 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O2 -Iinclude
-LDFLAGS = -lcurl -lpthread
+CFLAGS = -Wall -Wextra -O0 -g -Iinclude
+LDFLAGS = -lcurl
 
-SRC = src/main.c src/server.c src/llm.c src/commands.c src/utils.c \
-      backends/openai.c backends/gemini.c backends/claude.c backends/openrouter.c
+# 源文件
+SRC = src/main.c \
+      src/llm.c \
+      src/server.c \
+      backend/openai.c \
+      backend/gemini.c \
+      backend/deepseek.c \
+      backend/kimi.c \
+      backend/qwen.c
 
-OBJ = $(SRC:.c=.o)
-TARGET = llm_gateway
+TARGET = llmchat
 
 .PHONY: all clean
 
 all: $(TARGET)
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+$(TARGET): $(SRC)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	@echo "[*] Build complete: $(TARGET)"
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(TARGET)
+	@echo "[*] Clean done"
