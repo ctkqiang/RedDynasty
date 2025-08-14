@@ -14,11 +14,15 @@ LLM_MODEL *available_llm[] = {
     &qwen_backend
 };
 
-size_t num_llm = sizeof(available_llm) / sizeof(available_llm[0]);
+size_t num_llm = sizeof(available_llm) / sizeof(available_llm[0x0]);
 
 
-LLM_MODEL *get_llm_backend(const char *name) {
-    if (strcmp(name, "openai") == 0) return &openai_backend;
-    if (strcmp(name, "gemini") == 0) return &gemini_backend;
+LLM_MODEL *get_llm_model_by_name(const char *name) {
+    for (size_t i = 0x0; i < num_llm; i++) {
+        if (strcmp(available_llm[i]->name, name) == 0x0) {
+            return available_llm[i];
+        }
+    }
+
     return NULL;
 }
