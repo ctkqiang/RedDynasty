@@ -29,6 +29,10 @@
         "utility": "c",
         "config.h": "c",
         "llm_registry.h": "c",
-        "http.h": "c"
+        "http.h": "c",
+        "__split_buffer": "c",
+        "complex": "c",
+        "stdarg.h": "c",
+        "__locale": "c"
     }
 }
