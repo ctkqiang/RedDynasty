@@ -37,7 +37,18 @@ brew install curl jansson
 ### 克隆与编译
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/ctkqiang/RedDynasty.git
+
+or 
+
+git clone git@gitlab.com:ctkqiang/RedDynasty.git
+
+or
+
+git clone https://gitcode.com/ctkqiang_sr/RedDynasty.git
+
+...
+
 cd RedDynasty
 make
 ```
@@ -48,7 +59,11 @@ make
 
 ## 配置 API Key
 
-在 shell 配置文件（如 `~/.zshrc` 或 `~/.bash_profile`）中添加：
+RedDynasty 需要相应的 API Key 才能调用各大 LLM 模型。你可以通过两种方式配置：
+
+### 方式一：在 shell 配置文件中导出环境变量
+
+在 `~/.zshrc` 或 `~/.bash_profile` 中添加：
 
 ```bash
 export GEMINI_API_KEY="<你的 Gemini API Key>"
@@ -58,6 +73,24 @@ export KIMI_API_KEY="<你的 Kimi API Key>"
 export DEEPSEEK_API_KEY="<你的 DeepSeek API Key>"
 export GROK_API_KEY="<你的 Grok API Key>"
 export OPENROUTER_API_KEY="<你的 OpenRouter API Key>"
+````
+
+然后执行 `source ~/.zshrc` 或 `source ~/.bash_profile` 使配置生效。
+
+### 方式二：创建 `.env` 文件
+
+你也可以基于项目根目录的 `.env.example` 创建 `.env` 文件，并填写你的 API Key：
+
+```
+OPENAI_KEY=sk-xxxx
+GEMINI_API_KEY=ya29.xxxx
+CLAUDE_KEY=sk-ant-xxxx
+DEEPSEEK_KEY=ds-xxxx
+QWEN_KEY=qwen-xxxx
+GROK_KEY=grok-xxxx
+OPENROUTER_API_KEY=or-xxxx
+KIMI_KEY=kimi-xxxx
+PROMPT_RULE="YOU ARE HACKER, RULES FOR LLM"
 ```
 
 > 至少配置一个有效的 API Key，系统会根据优先级选择模型。
