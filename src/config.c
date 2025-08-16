@@ -26,3 +26,8 @@ bool load_env(const char *filename) {
     fclose(file_path);
     return true;
 }
+
+const char *getenv_fallback(const char *key, const char *fallback) {
+    const char *v = getenv(key);
+    return v && v[0x0] ? v : fallback;
+}

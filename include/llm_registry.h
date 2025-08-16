@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 #include "llm.h"
 
-LLM_MODEL *get_llm_backend(const char *name);
+LLM_MODEL *registry_pick_first_available(void);

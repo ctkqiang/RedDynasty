@@ -1,51 +1,34 @@
-#include <curl/curl.h>
-#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "../include/llm.h"
+#include "../include/http.h"
+#include "../include/llm_backend.h"
 
-static size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
-    char **response = userdata;
-    
-    size_t total = size * nmemb;
-    *response = realloc(*response, total + 1);
-    
-    memcpy(*response, ptr, total);
-    (*response)[total] = '\0';
+static bool openai_send_request(const char *prompt, char **response_out) {
+    const char *api = getenv("OPENAI_API_KEY");
+    if (!api) { fprintf(stderr, "[-] OPENAI_API_KEY missing\n"); return false; }
+    char auth[0x400];
+    snprintf(auth, sizeof(auth), "Authorization: Bearer %s", api);
 
-    return total;
+    const char *url = "https://api.openai.com/v1/chat/completions";
+
+    // Note: keep the system prompt configurable. Do NOT hardcode harmful content.
+    const char *PROMPT_RULE = getenv("PROMPT_RULE");
+    if (!PROMPT_RULE) PROMPT_RULE = "你是网络安全助理。只提供合法、守法、以防御为目的的信息。";
+
+    char body[0x2000];
+    snprintf(body, sizeof(body),
+        "{\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"system\",\"content\":\"%s\"},{\"role\":\"user\",\"content\":\"%s\"}],\"temperature\":0.2}",
+        PROMPT_RULE, prompt);
+
+    return http_post_json(url, body, auth, response_out);
 }
 
-static bool openai_send_request(const char *prompt, char **response) {
-    CURL *curl = curl_easy_init();
-    if (!curl) return false;
+static void openai_cleanup(void) {}
 
-    *response = NULL;
-    struct curl_slist *headers = NULL;
-    
-    headers = curl_slist_append(headers, "Content-Type: application/json");
-    headers = curl_slist_append(headers, "Authorization: Bearer YOUR_API_KEY");
-
-    char postfields[1024];
-    snprintf(postfields, sizeof(postfields),
-             "{\"model\":\"gpt-3.5-turbo\",\"messages\":[{\"role\":\"user\",\"content\":\"%s\"}]}",
-             prompt);
-
-    curl_easy_setopt(curl, CURLOPT_URL, "https://api.openai.com/v1/chat/completions");
-    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postfields);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, response);
-
-    CURLcode res = curl_easy_perform(curl);
-    curl_slist_free_all(headers);
-    curl_easy_cleanup(curl);
-
-    return res == CURLE_OK && *response != NULL;
-}
-
-static LLM_MODEL openai_backend = {
+LLM_MODEL openai_backend = {
     .name = "openai",
     .send_request = openai_send_request,
-    .cleanup = NULL
+    .cleanup = openai_cleanup
 };

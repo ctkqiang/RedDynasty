@@ -37,6 +37,9 @@
         "cctype": "c",
         "cstdio": "c",
         "cstring": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "curl.h": "c",
+        "llm_backend.h": "c",
+        "*.gitignore": "c"
     }
 }

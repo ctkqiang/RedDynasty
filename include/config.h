@@ -1,4 +1,5 @@
 #pragma once
+#include <stdbool.h>
 
 typedef struct {
     int port;
@@ -9,4 +10,6 @@ typedef struct {
     bool use_ssl; 
 } ServerConfig;
 
-void load_env(const char *filename);
+bool load_env(const char *filename);
+
+const char *getenv_fallback(const char *key, const char *fallback);
