@@ -1,0 +1,33 @@
+@startuml
+title RedDynasty 类图
+
+class Client {
+    - int sockfd
+    - char buffer[8192]
+    - LLM_MODEL *llm
+}
+
+class LLM_MODEL {
+    + char* name
+    + bool (*send_request)(char *prompt, char **response)
+}
+
+class LLMRegistry {
+    - LLM_MODEL *available_llm[]
+    - size_t num_llm
+    + LLM_MODEL* llm_select_model()
+    + LLM_MODEL* get_llm_model_by_name(name)
+    + LLM_MODEL* registry_pick_first_available()
+}
+
+class Server {
+    + void run_server(port)
+    + void server_loop(port, LLM_MODEL* backend)
+}
+
+Client --> LLM_MODEL : 使用
+Server --> Client : 接收/响应
+Server --> LLMRegistry : 选择模型
+LLMRegistry --> LLM_MODEL : 返回模型对象
+
+@enduml

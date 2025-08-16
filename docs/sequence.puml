@@ -1,0 +1,17 @@
+@startuml RedDynasty
+title RedDynasty 请求时序图
+
+actor 客户端
+participant 服务器 as Server
+participant LLM注册表 as Registry
+participant LLM模型 as LLM
+
+客户端 -> 服务器 : POST /ask 请求 (JSON: prompt)
+服务器 -> Registry : llm_select_model()
+Registry -> LLM : 选择优先可用模型 (Gemini > OpenAI > ...)
+Registry --> 服务器 : 返回选中模型
+服务器 -> LLM : send_request(prompt)
+LLM --> 服务器 : 返回生成文本
+服务器 --> 客户端 : HTTP 200 响应 (JSON: response)
+
+@enduml

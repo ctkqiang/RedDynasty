@@ -1,0 +1,23 @@
+@startuml
+title RedDynasty 服务器处理流程
+
+start
+:启动服务器 main(port);
+:加载可用 LLM 模型;
+:检查环境变量 Key;
+:选择优先可用模型 (Gemini > ...);
+:监听客户端请求;
+
+while (接收请求?)
+    :解析 HTTP 请求;
+    if (请求包含 "prompt"?)
+        :调用 LLM send_request(prompt);
+        :生成响应 JSON;
+        :返回客户端;
+    else
+        :返回错误 {"error":"Missing 'prompt' field"};
+    endif
+endwhile
+
+stop
+@enduml
