@@ -5,7 +5,7 @@
 #include "../include/http.h"
 #include "../include/llm_backend.h"
 
-static bool grok_send_request(const char *prompt, char **response_out) {
+bool grok_send_request(const char *prompt, char **response_out) {
     const char *api = getenv("GROK_API_KEY");
     if (!api) { fprintf(stderr, "[-] GROK_API_KEY missing\n"); return false; }
     char auth[0x200]; snprintf(auth, sizeof(auth), "Authorization: Bearer %s", api);

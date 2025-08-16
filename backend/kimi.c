@@ -5,7 +5,7 @@
 #include "../include/http.h"
 #include "../include/llm_backend.h"
 
-static bool kimi_send_request(const char *prompt, char **response_out) {
+bool kimi_send_request(const char *prompt, char **response_out) {
     const char *api = getenv("KIMI_API_KEY");
     if (!api) { fprintf(stderr, "[-] KIMI_API_KEY missing\n"); return false; }
     char auth[0x200]; snprintf(auth, sizeof(auth), "Authorization: Bearer %s", api);

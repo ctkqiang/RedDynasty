@@ -13,4 +13,4 @@ typedef struct {
 } Client;
 
 void run_server(int port);
-void handle_client(Client *client);
+void server_loop(int port, LLM_MODEL *backend);

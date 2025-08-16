@@ -2,6 +2,9 @@
 #include <stdio.h>
 
 #include "../include/config.h"
+#include "../include/llm.h"
+#include "../include/server.h"
+#include "../include/llm_registry.h"
 
 int PORT = 0x1F90;
 
@@ -12,10 +15,36 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "[-] 环境初始化失败\n");
         return EXIT_FAILURE;
     }
-    
-    printf("[*] 服务器正在端口 0x%X (%d) 启动\n", PORT, PORT);
-    // TODO: 启动 server_loop() 或 event loop
 
+    printf("[*] 服务器正在端口 0x%X (%d) 启动\n", PORT, PORT);
+
+    LLM_MODEL *backend = llm_select_model();
+
+    if (!backend) {
+        fprintf(stderr, "[-] 没有可用的 LLM backend\n");
+        return EXIT_FAILURE;
+    }
+    printf("[+] 已选择 backend: %s\n", backend->name);
+
+    const char *system_prompt = getenv("SYSTEM_PROMPT");
+    if (!system_prompt) {
+        system_prompt = "你是网络安全助理。只提供合法、守法、以防御为目的的信息。";
+    }
+
+    printf("[+] 使用的 SYSTEM_PROMPT: %s\n", system_prompt);
+
+    char *response = NULL;
+    if (backend->send_request(system_prompt, &response)) {
+        printf("[LLM 回复]: %s\n", response);
+        free(response);
+    } else {
+        fprintf(stderr, "[-] 请求失败: backend %s\n", backend->name);
+    }
+
+    if (backend->cleanup) backend->cleanup();
+
+    server_loop(PORT, backend);
+    
     return EXIT_SUCCESS;
 }
 

@@ -5,7 +5,7 @@
 #include "../include/http.h"
 #include "../include/llm_backend.h"
 
-static bool deepseek_send_request(const char *prompt, char **response_out) {
+bool deepseek_send_request(const char *prompt, char **response_out) {
     const char *api = getenv("DEEPSEEK_API_KEY");
     if (!api) { fprintf(stderr, "[-] DEEPSEEK_API_KEY missing\n"); return false; }
     char auth[0x200]; snprintf(auth, sizeof(auth), "Authorization: Bearer %s", api);

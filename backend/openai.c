@@ -5,7 +5,7 @@
 #include "../include/http.h"
 #include "../include/llm_backend.h"
 
-static bool openai_send_request(const char *prompt, char **response_out) {
+bool openai_send_request(const char *prompt, char **response_out) {
     const char *api = getenv("OPENAI_API_KEY");
     if (!api) { fprintf(stderr, "[-] OPENAI_API_KEY missing\n"); return false; }
     char auth[0x400];

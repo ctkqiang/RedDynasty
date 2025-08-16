@@ -40,6 +40,9 @@
         "cmath": "c",
         "curl.h": "c",
         "llm_backend.h": "c",
-        "*.gitignore": "c"
+        "*.gitignore": "c",
+        "__bit_reference": "c",
+        "array": "c",
+        "initializer_list": "c"
     }
 }

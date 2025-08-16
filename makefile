@@ -1,27 +1,16 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O0 -g -Iinclude
-LDFLAGS = -lcurl
+CFLAGS = -Wall -Iinclude -I/usr/local/include -I/opt/homebrew/include
+LDFLAGS = -L/usr/local/lib -L/opt/homebrew/lib -lcurl -ljansson 
 
-# 源文件
-SRC = src/main.c \
-      src/llm.c \
-      src/server.c \
-      backend/openai.c \
-      backend/gemini.c \
-      backend/deepseek.c \
-      backend/kimi.c \
-      backend/qwen.c
+SRC = $(wildcard src/*.c backend/*.c backend/vuln/*.c backend/command.c)
+OBJ = $(SRC:.c=.o)
 
-TARGET = llmchat
-
-.PHONY: all clean
+TARGET = main
 
 all: $(TARGET)
 
-$(TARGET): $(SRC)
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-	@echo "[*] Build complete: $(TARGET)"
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
-	rm -f $(TARGET)
-	@echo "[*] Clean done"
+	rm -f $(OBJ) $(TARGET)
