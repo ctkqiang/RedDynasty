@@ -114,6 +114,22 @@ PROMPT_RULE="YOU ARE HACKER, RULES FOR LLM"
 
 ---
 
+### 使用 Docker 运行（推荐）
+
+构建 Docker 镜像：
+
+```bash
+docker build -t reddynasty:latest .
+```
+
+运行容器并映射端口（示例端口 8000）：
+
+```bash
+docker run -d -p 8000:8000 --env-file .env reddynasty:latest
+```
+
+---
+
 ## 使用示例
 
 ### HTTP POST 请求
