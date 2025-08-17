@@ -7,9 +7,6 @@ OBJ = $(SRC:.c=.o)
 
 TARGET = main
 
-UNITY_DIR = test/Unity
-UNITY_SRC = $(UNITY_DIR)/src/unity.c
-
 test: $(OBJ) $(UNITY_SRC) test/test_main.c test/test_deepseek.c
 	$(CC) $(CFLAGS) -I$(UNITY_DIR)/src -o $@ $^ $(LDFLAGS)
 	./test
